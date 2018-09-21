@@ -3,7 +3,7 @@ import ssl
 from bs4 import BeautifulSoup
 import csv
 
-word = 'back'
+word = input('enter a word: ')
 ssl._create_default_https_context = ssl._create_unverified_context
 request = rq.Request('http://dictionary.cambridge.org/dictionary/english-chinese-traditional/'+word)
 response = rq.urlopen(request)
@@ -23,52 +23,54 @@ for phrase in phrases:
     hw = phrase.find('span', class_ = 'phrase')
     hw = hw.get_text()
     pos = 'phrase'
-    for peg in phrase.find_all('span', class_ = 'eg'):
-        egs.extend([peg.get_text()])
+    for df in phrase.find_all('div', class_ = 'def-block pad-indent'):
+        for peg in df.find_all('span', class_ = 'eg'):
+            egs.extend([peg.get_text()])
 
-    for ex in phrase.find_all('div', class_ = 'examp emphasized'):
-        ex.clear()
+        for ex in df.find_all('div', class_ = 'examp emphasized'):
+            ex.clear()
 
-    for tran in phrase.find_all('span', class_ = 'trans'):
-        trans.extend([tran.get_text()])
+        for tran in df.find_all('span', class_ = 'trans'):
+            trans.extend([tran.get_text()])
 
-    print(hw)
-    print(pos)
-    print(trans)
-    print(egs)
-    print('----------------------------')
+        print(hw)
+        print(pos)
+        print(trans)
+        print(egs)
+        print('----------------------------')
 
-    egs.clear()
-    trans.clear()
-    phrase.clear()
+        egs.clear()
+        trans.clear()
+        phrase.clear()
 
 entries = soup.find_all('div', class_ = 'entry-body__el clrd js-share-holder')
 for entry in entries:
     hw = entry.find('span', class_ = 'hw').string
     pos = entry.find('span', class_ = 'pos').string
-    for ipa in entry.find_all('span', class_ = 'ipa'):
-        ipas.extend([ipa.get_text()])
+    for df in entry.find_all('div', class_ = 'def-block pad-indent'):
+        for ipa in entry.find_all('span', class_ = 'ipa'):
+            ipas.extend([ipa.get_text()])
 
-    for eg in entry.find_all('span', class_ = 'eg'):
-        egs.extend([eg.get_text()])
+        for eg in df.find_all('span', class_ = 'eg'):
+            egs.extend([eg.get_text()])
 
-    for ex in entry.find_all('div', class_ = 'examp emphasized'):
-        ex.clear()
+        for ex in df.find_all('div', class_ = 'examp emphasized'):
+            ex.clear()
 
-    for tran in entry.find_all('span', class_ = 'trans'):
-        trans.extend([tran.get_text()])
-        
-    if trans == []:
-        break
-    else:
-        print(hw)
-        print(pos)
-        print(ipas)
-        print(trans)
-        print(egs)
-        print('----------------------------')
+        for tran in df.find_all('span', class_ = 'trans'):
+            trans.extend([tran.get_text()])
+            
+        if trans == []:
+            break
+        else:
+            print(hw)
+            print(pos)
+            print(ipas)
+            print(trans)
+            print(egs)
+            print('----------------------------')
 
-        ipas.clear()
-        trans.clear()
-        egs.clear()    
+            ipas.clear()
+            trans.clear()
+            egs.clear()    
         
