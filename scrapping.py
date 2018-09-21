@@ -74,47 +74,4 @@ for entry in entries:
         ipas.clear()
         trans.clear()
         egs.clear()    
-
-
-"""
-entry-body
-    entry-body__el clrd js-share-holder ＝*多詞性
-        pos-header
-            h3 di-title cdo-section-title-hw
-                headword
-                    hw ＝英文
-                posgram ico-bg
-                    pos ＝詞性
-            pron-info
-                us
-                    data-src ＝音檔
-                us
-                    pron
-                        ipa ＝/音標/
-        pos-body
-            sense-block ＝*多義
-                sense-body
-                    def-block pad-indent
-                        def-body
-                            trans ＝字義
-                            examp emphasized
-                                eg ＝例句
-                    phrase-block pad-indent ＝*如果有片語
-                        phrase-head
-                            phrase-title
-                                phrase ＝片語
-                                    obj
-                        phrase-body pad-indent
-                            def-block pad-indent
-                                def-body
-                                    trans ＝字義
-                                    examp emphasized
-                                        eg ＝例句
-                                        import requests
-----------------------
-英文 詞性
-
-音標
-字義
-例句
-"""
+        
