@@ -23,8 +23,7 @@ for phrase in phrases:
     hw = phrase.find('span', class_ = 'phrase')
     hw = hw.get_text()
     pos = 'phrase'
-    pegs = phrase.find_all('span', class_ = 'eg')
-    for peg in pegs:
+    for peg in phrase.find_all('span', class_ = 'eg'):
         egs.extend([peg.get_text()])
 
     for ex in phrase.find_all('div', class_ = 'examp emphasized'):
@@ -47,12 +46,10 @@ entries = soup.find_all('div', class_ = 'entry-body__el clrd js-share-holder')
 for entry in entries:
     hw = entry.find('span', class_ = 'hw').string
     pos = entry.find('span', class_ = 'pos').string
-    pron = entry.find_all('span', class_ = 'ipa')
-    for ipa in pron:
+    for ipa in entry.find_all('span', class_ = 'ipa'):
         ipas.extend([ipa.get_text()])
 
-    ee = entry.find_all('span', class_ = 'eg')
-    for eg in ee:
+    for eg in entry.find_all('span', class_ = 'eg'):
         egs.extend([eg.get_text()])
 
     for ex in entry.find_all('div', class_ = 'examp emphasized'):
