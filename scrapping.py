@@ -3,7 +3,7 @@ import ssl
 from bs4 import BeautifulSoup
 import csv
 
-word = input('')
+word = 'about'
 ssl._create_default_https_context = ssl._create_unverified_context
 request = rq.Request('http://dictionary.cambridge.org/dictionary/english-chinese-traditional/'+word)
 response = rq.urlopen(request)
@@ -41,10 +41,13 @@ with open('output.csv', 'w', newline='') as csvfile:
 #        print(egs)
 #        print('----------------------------')
 
+        trans = '<br>'.join(trans)
+        egs = '<br>'.join(egs)
+
         writer.writerow([hw, pos, None, trans, egs])
 
-        egs.clear()
-        trans.clear()
+        egs = []
+        trans = []
         phrase.clear()
 
     entries = soup.find_all('div', class_ = 'entry-body__el clrd js-share-holder')
@@ -53,7 +56,7 @@ with open('output.csv', 'w', newline='') as csvfile:
         pos = entry.find('span', class_ = 'pos').string
         pron = entry.find_all('span', class_ = 'ipa')
         for ipa in pron:
-            ipas.extend([ipa.get_text()])
+            ipas.extend(['/'+ipa.get_text()+'/'])
 
         ee = entry.find_all('span', class_ = 'eg')
         for eg in ee:
@@ -65,6 +68,10 @@ with open('output.csv', 'w', newline='') as csvfile:
         for tran in entry.find_all('span', class_ = 'trans'):
             trans.extend([tran.get_text()])
             
+        ipas = '<br>'.join(ipas)
+        trans = '<br>'.join(trans)
+        egs = '<br>'.join(egs)
+
         if trans == []:
             break
         else:
@@ -77,6 +84,6 @@ with open('output.csv', 'w', newline='') as csvfile:
 
             writer.writerow([hw, pos, ipas, trans, egs])
             
-            ipas.clear()
-            trans.clear()
-            egs.clear()
+            ipas = []
+            trans = []
+            egs = []
