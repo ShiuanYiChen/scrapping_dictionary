@@ -3,7 +3,7 @@ import ssl
 from bs4 import BeautifulSoup
 import csv
 
-word = 'back'
+word = input('')
 ssl._create_default_https_context = ssl._create_unverified_context
 request = rq.Request('http://dictionary.cambridge.org/dictionary/english-chinese-traditional/'+word)
 response = rq.urlopen(request)
@@ -41,7 +41,7 @@ with open('output.csv', 'w', newline='') as csvfile:
 #        print(egs)
 #        print('----------------------------')
 
-        writer.writerow([hw, pos, trans, egs])
+        writer.writerow([hw, pos, None, trans, egs])
 
         egs.clear()
         trans.clear()
@@ -75,7 +75,7 @@ with open('output.csv', 'w', newline='') as csvfile:
 #            print(egs)
 #            print('----------------------------')
 
-            writer.writerow([hw, pos, trans, egs])
+            writer.writerow([hw, pos, ipas, trans, egs])
             
             ipas.clear()
             trans.clear()
