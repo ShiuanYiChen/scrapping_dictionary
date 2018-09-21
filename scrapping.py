@@ -57,7 +57,7 @@ with open('output.csv', 'w', newline='') as csvfile:
         pos = entry.find('span', class_ = 'pos').string
         for df in entry.find_all('div', class_ = 'def-block pad-indent'):
             for ipa in entry.find_all('span', class_ = 'ipa'):
-                ipas.extend([ipa.get_text()])
+                ipas.extend(['/'+ipa.get_text()+'/'])
 
             for eg in df.find_all('span', class_ = 'eg'):
                 egs.extend([eg.get_text()])
