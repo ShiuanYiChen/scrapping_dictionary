@@ -36,12 +36,6 @@ with open('output.csv', 'w', newline='') as csvfile:
             for tran in df.find_all('span', class_ = 'trans'):
                 trans.extend([tran.get_text()])
 
-#           print(hw)
-#           print(pos)
-#           print(trans)
-#           print(egs)
-#           print('----------------------------')
-
             trans = '<br>'.join(trans)
             egs = '<br>'.join(egs)
 
@@ -54,10 +48,13 @@ with open('output.csv', 'w', newline='') as csvfile:
     entries = soup.find_all('div', class_ = 'entry-body__el clrd js-share-holder')
     for entry in entries:
         hw = entry.find('span', class_ = 'hw').string
-        pos = entry.find('span', class_ = 'pos').string
+        pos = entry.find('span', class_ = 'posgram ico-bg')
+        pos = pos.get_text()
         for df in entry.find_all('div', class_ = 'def-block pad-indent'):
             for ipa in entry.find_all('span', class_ = 'ipa'):
                 ipas.extend(['/'+ipa.get_text()+'/'])
+            ipas[0] = 'UK ' + ipas[0]
+            ipas[1] = 'US ' + ipas[1]
 
             for eg in df.find_all('span', class_ = 'eg'):
                 egs.extend([eg.get_text()])
@@ -75,13 +72,6 @@ with open('output.csv', 'w', newline='') as csvfile:
             if trans == []:
                 break
             else:
-#               print(hw)
-#               print(pos)
-#               print(ipas)
-#               print(trans)
-#               print(egs)
-#               print('----------------------------')
-
                 writer.writerow([hw, pos, ipas, trans, egs])
             
                 ipas = []
