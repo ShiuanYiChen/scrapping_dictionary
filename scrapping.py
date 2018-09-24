@@ -84,4 +84,4 @@ with open('output.csv', 'a', newline='') as csvfile:
                         egs = [] 
         except Exception as E:
             log = open('errors log.txt', 'a')
-            log.writelines(word + '\n')
+            log.writelines(word)
